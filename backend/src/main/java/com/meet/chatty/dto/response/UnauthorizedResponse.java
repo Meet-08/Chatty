@@ -12,7 +12,7 @@ public class UnauthorizedResponse implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
         String message = """
                 {
-                    error : User is unauthorized - No Token Provided
+                    error : User is unauthorized - Invalid Token
                 }
                 """;
 

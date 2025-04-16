@@ -4,11 +4,13 @@ import com.meet.chatty.dto.request.LoginRequest;
 import com.meet.chatty.dto.request.SignupRequest;
 import com.meet.chatty.dto.response.UserResponse;
 import com.meet.chatty.service.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -33,6 +35,11 @@ public class AuthController {
         return authService.login(request, response);
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> checkAuth(HttpServletRequest req){
+        return authService.checkAuth(req);
+    }
+
     @PostMapping("/logout")
     public ResponseEntity<String> logout(
             HttpServletResponse response
@@ -41,10 +48,11 @@ public class AuthController {
     }
 
     @PutMapping("/update-profile")
-    public ResponseEntity<?> updateProfile(
-
+    public ResponseEntity<UserResponse> updateProfile(
+            HttpServletRequest req,
+            MultipartFile profilePic
     ) {
-        return ResponseEntity.ok().build();
+        return authService.updateProfile(req, profilePic);
     }
 
 }

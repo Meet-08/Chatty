@@ -1,6 +1,8 @@
 package com.meet.chatty.configuration;
 
 import com.meet.chatty.error.JwtException;
+import com.meet.chatty.model.User;
+import com.meet.chatty.repository.UserRepository;
 import com.meet.chatty.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,6 +25,7 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
+    private final UserRepository userRepository;
     private final UserDetailsService userDetailsService;
 
     @Override
@@ -41,12 +44,16 @@ public class JwtFilter extends OncePerRequestFilter {
         userId = jwtUtil.extractUsername(token);
 
         if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            User user = userRepository.findById(userId).orElseThrow(
+                    () -> new JwtException("User not found")
+            );
             UserDetails userDetails = userDetailsService.loadUserByUsername(userId);
             if (jwtUtil.validateToken(token, userDetails.getUsername())) {
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+                request.setAttribute("user", user);
             }
         }
 

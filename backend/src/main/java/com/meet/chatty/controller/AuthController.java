@@ -35,12 +35,12 @@ public class AuthController {
         return authService.login(request, response);
     }
 
-    @GetMapping("/me")
-    public ResponseEntity<UserResponse> checkAuth(HttpServletRequest req){
+    @GetMapping("/check")
+    public ResponseEntity<UserResponse> checkAuth(HttpServletRequest req) {
         return authService.checkAuth(req);
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public ResponseEntity<String> logout(
             HttpServletResponse response
     ) {

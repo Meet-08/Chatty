@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -44,14 +43,13 @@ public class AuthService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .build();
 
-        jwtUtil.createToken(
-                new HashMap<>(),
-                user.getId(),
-                response
-        );
 
         User savedUser = userRepository.save(user);
 
+        jwtUtil.createToken(
+                savedUser.getId(),
+                response
+        );
         return ResponseEntity.status(201).body(
                 UserResponse.builder()
                         ._id(savedUser.getId())
@@ -71,7 +69,6 @@ public class AuthService {
             throw new UserException("Invalid Credentials", 400);
 
         jwtUtil.createToken(
-                new HashMap<>(),
                 user.getId(),
                 response
         );

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
-import java.util.Map;
 
 @Component
 public class JwtUtil {
@@ -23,13 +22,11 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
     }
 
-    public void createToken(Map<String, Object> claims, String subject, HttpServletResponse response) {
+    public void createToken(String subject, HttpServletResponse response) {
         Date now = new Date();
         long jwtExpirationInMs = 7 * 24 * 60 * 60 * 1000;
         Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
-
         String token = Jwts.builder()
-                .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)

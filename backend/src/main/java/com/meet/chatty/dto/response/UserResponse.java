@@ -3,6 +3,8 @@ package com.meet.chatty.dto.response;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 public class UserResponse {
@@ -14,5 +16,7 @@ public class UserResponse {
     private String email;
 
     private String profilePic;
+
+    private LocalDateTime createdAt;
 
 }

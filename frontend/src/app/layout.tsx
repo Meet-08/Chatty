@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import StoreProvider from "./StoreProvider";
 import Navbar from "@/Components/Navbar";
+import { ThemeProvider } from "next-themes";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,15 +27,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <StoreProvider>
-          <Toaster />
-          <Navbar />
-          {children}
-        </StoreProvider>
+        <ThemeProvider
+          attribute="data-theme"
+          defaultTheme="retro"
+          storageKey="chat-theme"
+          enableSystem
+        >
+          <StoreProvider>
+            <Toaster />
+            <Navbar />
+            {children}
+          </StoreProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

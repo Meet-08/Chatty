@@ -56,6 +56,7 @@ public class AuthService {
                         .fullName(savedUser.getFullName())
                         .email(savedUser.getEmail())
                         .profilePic(savedUser.getProfilePic().getProfilePicUrl())
+                        .createdAt(savedUser.getCreatedAt())
                         .build()
         );
     }
@@ -78,6 +79,7 @@ public class AuthService {
                         ._id(user.getId())
                         .fullName(user.getFullName())
                         .email(user.getEmail())
+                        .createdAt(user.getCreatedAt())
                         .build()
         );
     }
@@ -116,6 +118,7 @@ public class AuthService {
                             .fullName(updatedUser.getFullName())
                             .email(updatedUser.getEmail())
                             .profilePic(updatedUser.getProfilePic().getProfilePicUrl())
+                            .createdAt(updatedUser.getCreatedAt())
                             .build()
             );
 
@@ -135,6 +138,7 @@ public class AuthService {
                         .fullName(user.getFullName())
                         .email(user.getEmail())
                         .profilePic(user.getProfilePic().getProfilePicUrl())
+                        .createdAt(user.getCreatedAt())
                         .build()
         );
     }

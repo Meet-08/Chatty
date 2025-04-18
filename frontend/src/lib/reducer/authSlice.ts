@@ -69,6 +69,18 @@ export const logout = createAsyncThunk(
   }
 );
 
+export const updateProfile = createAsyncThunk(
+  "auth/updateProfile",
+  async (profilePic: FormData, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosFetch.put("/auth/update-profile", profilePic);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -131,6 +143,20 @@ export const authSlice = createSlice({
       .addCase(logout.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as Error;
+        toast.error("Something went wrong");
+      })
+      .addCase(updateProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.loading = false;
+        toast.success("Profile updated successfully");
+      })
+      .addCase(updateProfile.rejected, (state, action) => {
+        state.error = action.payload as Error;
+        state.loading = false;
         toast.error("Something went wrong");
       });
   },

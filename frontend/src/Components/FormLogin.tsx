@@ -4,6 +4,7 @@ import { useAppDispatch } from "@/lib/hooks";
 import { login } from "@/lib/reducer/authSlice";
 import { Mail, EyeOff, Eye, Loader2, Lock } from "lucide-react";
 import { useRouter } from "next/navigation";
+
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -38,7 +39,9 @@ const FormLogin = () => {
     if (success === true) {
       try {
         await dispatch(login(formData)).unwrap();
+        console.log("These is called", router);
         router.push("/");
+        console.log("router.push called");
       } catch (error) {
         console.log(error);
       } finally {

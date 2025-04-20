@@ -19,7 +19,7 @@ public class CookieUtils {
     public static void deleteCookie(HttpServletResponse response,
                                     String name) {
         String headerValue = String.format(
-                "%s=; Max-Age=0; Path=/; HttpOnly; Secure; SameSite=None",
+                "%s=; Max-Age=0;. Path=/; HttpOnly; Secure; SameSite=None",
                 name
         );
         response.addHeader("Set-Cookie", headerValue);

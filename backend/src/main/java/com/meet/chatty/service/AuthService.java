@@ -79,6 +79,7 @@ public class AuthService {
                         ._id(user.getId())
                         .fullName(user.getFullName())
                         .email(user.getEmail())
+                        .profilePic(user.getProfilePic().getProfilePicUrl())
                         .createdAt(user.getCreatedAt())
                         .build()
         );

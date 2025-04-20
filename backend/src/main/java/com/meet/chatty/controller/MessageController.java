@@ -2,6 +2,7 @@ package com.meet.chatty.controller;
 
 
 import com.meet.chatty.dto.request.SendMessageRequest;
+import com.meet.chatty.dto.response.UserResponse;
 import com.meet.chatty.model.Message;
 import com.meet.chatty.model.User;
 import com.meet.chatty.service.MessageService;
@@ -20,7 +21,7 @@ public class MessageController {
     private final MessageService messageService;
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getUserForSidebar(
+    public ResponseEntity<List<UserResponse>> getUserForSidebar(
             HttpServletRequest request
     ) {
         return messageService.getUserForSidebar(request);

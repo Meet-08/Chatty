@@ -1,14 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "@/lib/reducer/authSlice";
+import { listenerMiddleware } from "./listenerMiddleware";
+import { rootReducer } from "./reducer/rootReducer";
 
-export const makeStore = () => {
-  return configureStore({
-    reducer: {
-      auth: authReducer,
-    },
+export const makeStore = () =>
+  configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(listenerMiddleware.middleware),
   });
-};
 
 export type AppStore = ReturnType<typeof makeStore>;
-export type RootState = ReturnType<AppStore["getState"]>;
 export type AppDispatch = AppStore["dispatch"];

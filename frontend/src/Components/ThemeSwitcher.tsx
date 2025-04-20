@@ -2,21 +2,30 @@
 
 import { THEMES } from "@/lib/constants";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 const ThemeSwitcher = () => {
   const { setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  if (!resolvedTheme) return null;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || !resolvedTheme) return null;
 
   return (
-    <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
+    <div className="grid grid-cols-3 sm:grid-cols-6 md:grid-cols-8 gap-2">
       {THEMES.map((theme) => (
         <button
           key={theme}
           className={`
                 group flex flex-col items-center gap-1.5 p-2 rounded-lg transition-colors
-                ${theme === theme ? "bg-base-200" : "hover:bg-base-200/50"}
-              `}
+                 ${
+                   theme === resolvedTheme
+                     ? "bg-base-200"
+                     : "hover:bg-base-200/50"
+                 }`}
           onClick={() => setTheme(theme)}
         >
           <div

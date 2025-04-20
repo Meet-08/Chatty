@@ -5,12 +5,11 @@ import { LogOut, MessageSquare, Settings, User } from "lucide-react";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { authCheck, logout } from "@/lib/reducer/authSlice";
-import { RootState } from "@/lib/store";
 import { redirect } from "next/navigation";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
-  const { user, loading } = useAppSelector((state: RootState) => state.auth);
+  const { user, loading } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchUser = async () => {

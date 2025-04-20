@@ -1,6 +1,7 @@
 package com.meet.chatty.service;
 
 import com.meet.chatty.dto.request.SendMessageRequest;
+import com.meet.chatty.dto.response.UserResponse;
 import com.meet.chatty.model.Message;
 import com.meet.chatty.model.User;
 import com.meet.chatty.repository.MessageRepository;
@@ -8,6 +9,7 @@ import com.meet.chatty.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -21,11 +23,12 @@ public class MessageService {
     private final UserRepository userRepository;
     private final MessageRepository messageRepository;
     private final CloudinaryService cloudinaryService;
+    private final SimpMessagingTemplate messagingTemplate;
 
 
-    public ResponseEntity<List<User>> getUserForSidebar(HttpServletRequest request) {
+    public ResponseEntity<List<UserResponse>> getUserForSidebar(HttpServletRequest request) {
         String loggedInUserId = ((User) request.getAttribute("user")).getId();
-        List<User> users = userRepository.findAllByIdNot(loggedInUserId);
+        List<UserResponse> users = userRepository.findUserSidebarByIdNot(loggedInUserId);
         return ResponseEntity.ok(users);
     }
 
@@ -53,9 +56,13 @@ public class MessageService {
                     .image(imageUrl)
                     .build();
 
-            messageRepository.save(newMessage);
+            Message savedMessage = messageRepository.save(newMessage);
 
-            //to-do: realtime functionality goes here
+            String receiverDestination = "/queue/messages/" + receiverId;
+            String senderDestination = "/queue/messages/" + senderId;
+
+            messagingTemplate.convertAndSendToUser(receiverId, "/queue/messages", savedMessage);
+
             return ResponseEntity.status(201).body(newMessage);
 
 

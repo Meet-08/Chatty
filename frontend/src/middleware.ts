@@ -6,6 +6,7 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   if (pathname === "/setting") NextResponse.next();
+  
   const isAuthRoute =
     pathname === "/login" || pathname === "/signup" || pathname === "/setting";
 

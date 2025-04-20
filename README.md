@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chatty
 
-## Getting Started
+Chatty is a full-stack chat application built with a Next.js frontend and a Spring Boot backend. It provides a seamless chat experience with features like user authentication, real-time messaging, and profile management.
 
-First, run the development server:
+## Project Structure
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **frontend/**: Contains the Next.js application for the user interface.
+- **backend/**: Contains the Spring Boot application for the server-side logic and APIs.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- User authentication (login/signup)
+- Real-time messaging using WebSocket
+- Profile management
+- Theme switching with DaisyUI
+- Responsive design
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Technologies Used
 
-## Learn More
+### Frontend
 
-To learn more about Next.js, take a look at the following resources:
+- **Next.js**: React framework for building the user interface
+- **DaisyUI**: Tailwind CSS component library for styling
+- **Axios**: For making HTTP requests
+- **Redux Toolkit**: For state management
+- **WebSocket**: For real-time communication
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Backend
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Spring Boot**: Java framework for building the backend
+- **Maven**: Dependency management and build tool
+- **Docker**: For containerized deployment
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License.

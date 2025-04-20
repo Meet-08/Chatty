@@ -57,7 +57,7 @@ public class AuthController {
         return authService.updateProfile(req, profilePic);
     }
 
-    @GetMapping("/api/auth/validate-token")
+    @GetMapping("/validate-token")
     public ResponseEntity<Map<String, Boolean>> validateToken() {
         return ResponseEntity.ok(Map.of("valid", true));
     }

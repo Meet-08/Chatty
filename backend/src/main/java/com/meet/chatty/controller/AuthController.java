@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -53,6 +55,11 @@ public class AuthController {
             MultipartFile profilePic
     ) {
         return authService.updateProfile(req, profilePic);
+    }
+
+    @GetMapping("/api/auth/validate-token")
+    public ResponseEntity<Map<String, Boolean>> validateToken() {
+        return ResponseEntity.ok(Map.of("valid", true));
     }
 
 }

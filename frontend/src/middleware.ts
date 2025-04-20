@@ -4,7 +4,8 @@ import { User } from "./interfaces/user";
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const isAuthRoute = pathname === "/login" || pathname === "/signup";
+  const isAuthRoute =
+    pathname === "/login" || pathname === "/signup" || pathname === "/setting";
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/check`, {
     headers: {
@@ -28,6 +29,6 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon\\.ico|robots\\.txt|sitemap\\.xml).*)",
+    "/((?!api|_next/static|_next/image|favicon\\.ico|robots\\.txt|sitemap\\.xml|setting).*)",
   ],
 };

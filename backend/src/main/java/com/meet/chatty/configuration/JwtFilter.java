@@ -6,6 +6,7 @@ import com.meet.chatty.repository.UserRepository;
 import com.meet.chatty.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -30,15 +31,14 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        String token = request.getHeader("Authorization");
+        String token = getTokenFromCookies(request);
         String userId;
 
-        if (token == null) {
+        if (token == null || token.trim().isEmpty()) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        token = token.substring(7);
         if (jwtUtil.isTokenExpired(token)) throw new JwtException("Token expired");
 
         userId = jwtUtil.extractUsername(token);
@@ -58,5 +58,16 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private String getTokenFromCookies(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null) return null;
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("auth_token")) {
+                return cookie.getValue();
+            }
+        }
+        return null;
     }
 }

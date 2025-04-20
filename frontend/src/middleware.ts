@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { User } from "./interfaces/user";
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -9,13 +8,15 @@ export async function middleware(req: NextRequest) {
 
   const isAuthRoute = pathname === "/login" || pathname === "/signup";
 
+  const token = req.cookies.get("auth_token")?.value;
+
   const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/check`, {
     headers: {
-      cookie: req.headers.get("cookie") || "",
+      Authorization: `Bearer ${token}`,
     },
   });
 
-  const data: User | { error: string } = await res.json();
+  const data = await res.json();
   const isAuthenticated = !("error" in data);
 
   if (!isAuthenticated && !isAuthRoute) {
@@ -28,9 +29,3 @@ export async function middleware(req: NextRequest) {
 
   return NextResponse.next();
 }
-
-export const config = {
-  matcher: [
-    "/((?!api|_next/static|_next/image|favicon\\.ico|robots\\.txt|sitemap\\.xml).*)",
-  ],
-};

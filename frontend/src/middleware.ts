@@ -5,10 +5,9 @@ import { User } from "./interfaces/user";
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  if (pathname === "/setting") NextResponse.next();
-  
-  const isAuthRoute =
-    pathname === "/login" || pathname === "/signup" || pathname === "/setting";
+  if (pathname === "/setting") return NextResponse.next();
+
+  const isAuthRoute = pathname === "/login" || pathname === "/signup";
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/check`, {
     headers: {

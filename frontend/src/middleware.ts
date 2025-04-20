@@ -37,7 +37,7 @@ export async function middleware(req: NextRequest) {
 
   // --- Token Validation with Backend ---
   let isAuthenticated = false;
-  let userData: User | null = null; // Optional: Store user data if needed later
+  // let userData: User | null = null; // Optional: Store user data if needed later
 
   if (authToken) {
     console.log(

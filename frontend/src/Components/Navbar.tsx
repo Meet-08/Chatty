@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
-  const { user, loading } = useAppSelector((state) => state.auth);
+  const { user } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -23,8 +23,6 @@ const Navbar = () => {
     dispatch(logout());
     redirect("/login");
   };
-
-  if (loading && !user) return <h1>Loading ...</h1>;
 
   return (
     <header className="border-b border-base-300 fixed w-full top-0 z-40 backdrop-blur-lg bg-base-100/80">

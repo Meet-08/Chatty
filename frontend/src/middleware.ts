@@ -8,10 +8,12 @@ export async function middleware(req: NextRequest) {
   const isAuthRoute = pathname === "/login" || pathname === "/signup";
 
   if (pathname === "/setting") return NextResponse.next();
-
-  // Forward cookies so backend can authenticate
+  const authToken = req.cookies.get("auth_token")?.value;
   const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/check`, {
-    credentials: "include",
+    headers: {
+      // Manually forward the cookie
+      Cookie: `auth_token=${authToken}`,
+    },
   });
 
   const data: User | { error: string } = await res.json();

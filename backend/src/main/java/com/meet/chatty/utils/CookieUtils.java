@@ -1,34 +1,28 @@
 package com.meet.chatty.utils;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+
 
 public class CookieUtils {
 
-    public static void addCookie(HttpServletResponse response, String name, String value, int days) {
-        Cookie cookie = new Cookie(name, value);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true); // Set to true in production
-        cookie.setMaxAge(days * 24 * 60 * 60);
-        response.addCookie(cookie);
-
-        // Manually add SameSite attribute
-        String headerValue = String.format("%s=%s; Max-Age=%d; Path=/; HttpOnly; SameSite=none",
-                name, value, days * 24 * 60 * 60);
-        response.setHeader("Set-Cookie", headerValue);
+    public static void addCookie(HttpServletResponse response,
+                                 String name, String value, int days, String domain) {
+        // Build manual Set-Cookie header including Secure and SameSite=None
+        String headerValue = String.format(
+                "%s=%s; Max-Age=%d; Domain=%s; Path=/; HttpOnly; Secure; SameSite=None",
+                name, value, days * 24 * 60 * 60, domain
+        );
+        // Append the header—don’t overwrite
+        response.addHeader("Set-Cookie", headerValue);
     }
 
-    public static void deleteCookie(HttpServletResponse response, String name) {
-        Cookie cookie = new Cookie(name, "");
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true); // Set to true in production
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
-
-        // Manually add SameSite attribute
-        String headerValue = String.format("%s=; Max-Age=0; Path=/; HttpOnly; SameSite=none", name);
-        response.setHeader("Set-Cookie", headerValue);
+    public static void deleteCookie(HttpServletResponse response,
+                                    String name, String domain) {
+        String headerValue = String.format(
+                "%s=; Max-Age=0; Domain=%s; Path=/; HttpOnly; Secure; SameSite=None",
+                name, domain
+        );
+        response.addHeader("Set-Cookie", headerValue);
     }
 }
+

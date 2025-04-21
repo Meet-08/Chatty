@@ -1,9 +1,18 @@
 import AuthImagePattern from "@/Components/AuthImagePattern";
 import FormLogin from "@/Components/FormLogin";
-import { MessageSquare } from "lucide-react";
-import Link from "next/link";
 
-const Login = () => {
+import { MessageSquare } from "lucide-react";
+import { cookies } from "next/headers";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+
+const Login = async () => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("auth_token");
+
+  if (token) {
+    redirect("/");
+  }
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
       <div className="flex flex-col justify-center items-center p-6 sm:p-12">

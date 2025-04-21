@@ -5,6 +5,8 @@ import { redirect } from "next/navigation";
 const Home = async () => {
   const cookieStore = await cookies();
   const token = cookieStore.get("auth_token");
+  console.log(cookieStore);
+  console.log(token);
 
   if (!token) {
     redirect("/login");

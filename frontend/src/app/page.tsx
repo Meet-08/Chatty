@@ -1,16 +1,6 @@
 import MainSection from "@/Components/MainSection";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 const Home = async () => {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("auth_token");
-  console.log(cookieStore);
-  console.log(token);
-
-  if (!token) {
-    redirect("/login");
-  }
   return (
     <div className="h-screen bg-base-200">
       <div className="flex items-center justify-center pt-20 px-4">

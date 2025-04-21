@@ -16,14 +16,16 @@ const Sidebar = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      if (users.length === 0) {
-        await dispatch(getUser());
-      }
+      await dispatch(getUser());
     };
     fetchUsers();
-  }, [dispatch, users]);
+  }, [dispatch]);
 
   if (isUserLoading) return <SidebarSkeleton />;
+  if (!users)
+    return (
+      <h1 className="text-center text-lg font-medium">No user&#39;s found</h1>
+    );
 
   return (
     <aside className="h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">

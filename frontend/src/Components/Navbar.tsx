@@ -13,10 +13,11 @@ const Navbar = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
+      if (user) return;
       await dispatch(authCheck());
     };
     fetchUser();
-  }, [dispatch]);
+  }, [dispatch, user]);
 
   const handleLogout = () => {
     dispatch(logout());

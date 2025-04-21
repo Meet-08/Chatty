@@ -39,9 +39,7 @@ const FormLogin = () => {
     if (success === true) {
       try {
         await dispatch(login(formData)).unwrap();
-        console.log("These is called", router);
         router.push("/");
-        console.log("router.push called");
       } catch (error) {
         console.log(error);
       } finally {

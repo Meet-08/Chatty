@@ -45,6 +45,7 @@ const MessageInput = () => {
       toast.error("Failed to send message");
     } finally {
       setText("");
+      removeImage();
       setImagePreview(null);
       setIsSending(false);
     }

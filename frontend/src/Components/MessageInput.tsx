@@ -9,8 +9,8 @@ import toast from "react-hot-toast";
 
 const MessageInput = () => {
   const [text, setText] = useState("");
-
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [sending, setIsSending] = useState(false);
   const fileRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
 
@@ -32,6 +32,7 @@ const MessageInput = () => {
     if (!text.trim() && !imagePreview) return;
 
     try {
+      setIsSending(true);
       const formData = new FormData();
       const file = fileRef.current?.files ? fileRef.current.files[0] : null;
       if (file) {
@@ -45,6 +46,7 @@ const MessageInput = () => {
     } finally {
       setText("");
       setImagePreview(null);
+      setIsSending(false);
     }
   };
 
@@ -101,7 +103,7 @@ const MessageInput = () => {
         <button
           type="submit"
           className="btn btn-primary btn-circle"
-          disabled={!text.trim() && !imagePreview}
+          disabled={(!text.trim() && !imagePreview) || sending}
         >
           <Send size={20} />
         </button>

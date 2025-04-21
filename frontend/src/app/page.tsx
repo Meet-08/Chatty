@@ -6,7 +6,7 @@ const Home = async () => {
   const token = (await cookies()).get("auth_token");
   console.log(token);
   if (!token) {
-    redirect("/");
+    redirect("/login");
   }
 
   return (
